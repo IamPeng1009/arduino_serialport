@@ -105,9 +105,6 @@ GUI 打开后：
 | --- | --- |
 | `begin(Serial, baud)` | 绑定串口并设置波特率，默认 1000000 |
 | `update()` | 在 `loop()` 里反复调用，处理输入字节 |
-| `available()` | 是否有新一帧到达（读取后自动清除） |
-| `hasValue()` | 是否收到过任意有效帧 |
 | `readValues(values[8])` | 一次性读出 8 路值，读取后清新数据标志 |
 | `getLatestValue(i)` | 获取第 i 路（0..7）最近值 |
-| `getAverageValue(i)` | 获取第 i 路最近 200 帧的平均值 |
 | `getFrameCount()` | 累计已解析帧数 |
