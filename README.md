@@ -65,39 +65,30 @@ void loop() {
 
 这段代码也直接做成了示例：`examples/BASIC/BASIC.ino`，在 Arduino IDE "文件 → 示例 → SYCMultiSensorLib → BASIC" 里可以直接打开。
 
-## 用 Python 脚本测试
+## 用上位机查看数据
 
-烧录完上面的 sketch 后，按下面步骤验证整条链路通不通。
+仓库根目录已经提供了 **huda_serial.exe**（约 50 MB，免安装、不需要 Python 环境），双击即可使用。
 
-### 1. 安装 Python 依赖
+详细学员操作步骤见仓库里的 **`学员使用指南.docx`**。
 
-要求 Python 3.9+。在仓库目录下执行：
+### 三步连接
+
+1. 确保 Arduino 已经烧录了 BASIC 示例，并且 **Arduino IDE 的串口监视器已关闭**（否则 exe 抢不到串口）
+2. 双击 `huda_serial.exe`
+3. 在 GUI 里：**Port** 选 Arduino COM 口 → **Baud** 选 `1000000` → 点 **Connect**
+
+状态栏变绿、右上角 FPS 跳数、曲线开始画 → 连接成功。
+
+> Windows Defender 第一次启动 exe 可能弹"已保护你的电脑" → 点 **更多信息 → 仍要运行** 即可（无签名 exe 的正常提示）。
+
+### 给开发者：用 Python 源码运行
+
+如果想改 GUI 或自己跑源码，仓库里也保留了 `huda_serial.py`：
 
 ```bash
 pip install pyserial PyQt6 pyqtgraph
-```
-
-### 2. 接线确认
-
-- 采集模组 TX → Arduino RX（D0）
-- 采集模组 GND → Arduino GND
-- 采集模组供电按手册接好
-- Arduino USB 连电脑
-
-参考仓库根目录的 `接线示意图.jpg` 和 `接线实物图.jpg`。
-
-### 3. 启动上位机
-
-```bash
 python huda_serial.py
 ```
-
-GUI 打开后：
-
-1. **Port** 下拉框选你 Arduino 所在的串口（Windows 下形如 `COM3`，macOS/Linux 下形如 `/dev/ttyUSB0`、`/dev/cu.usbmodem*`）。若没有，点 **Refresh**。
-2. **Baud** 选择 `1000000`（必须与 sketch 里 `sensors.begin(Serial, 1000000)` 一致）。
-3. 点 **Connect**。状态变绿、右上角 **FPS** 开始跳数即说明数据已通。
-4. 中间曲线区会实时画出 8 路通道；右侧 `CURRENT VALUES` 显示当前数值。点单行可隐藏/显示对应曲线。
 
 ## API
 
