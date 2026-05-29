@@ -95,7 +95,7 @@ void MultiSensorParser::parseFrame()
         _valueHistory[i][_historyIndex] = v;
     }
 
-    _historyIndex = (_historyIndex + 1) % 200;
+    _historyIndex = (_historyIndex + 1) % HISTORY_DEPTH;
     _hasValue = true;
     _newData = true;
     _frameCount++;
@@ -122,8 +122,8 @@ float MultiSensorParser::getAverageValue(uint8_t index) const
 {
     if (index >= SENSOR_COUNT) return 0.0f;
     float sum = 0.0f;
-    for (int i = 0; i < 200; i++) sum += _valueHistory[index][i];
-    return sum / 200.0f;
+    for (uint8_t i = 0; i < HISTORY_DEPTH; i++) sum += _valueHistory[index][i];
+    return sum / (float)HISTORY_DEPTH;
 }
 
 unsigned long MultiSensorParser::getFrameCount() const { return _frameCount; }
